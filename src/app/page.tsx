@@ -1,113 +1,154 @@
-import Image from "next/image";
+"use client";
+import axios from "axios";
+import { useState } from "react";
 
 export default function Home() {
+  const [response, setResponse] = useState(null);
+  const [search, setsearch] = useState<any>(null);
+
+  interface PaxInfo {
+    paxType: number;
+    paxKey: string;
+  }
+
+  interface RouteInfo {
+    depCity: string;
+    arrCity: string;
+    travelDate: string;
+    // schedule: {
+    //   before: number;
+    //   after: number;
+    // };
+  }
+
+  interface JourneyInfo {
+    journeyType: number;
+    routeInfo: RouteInfo[];
+  }
+
+  interface SearchCriteria {
+    paxInfo: PaxInfo[];
+    journeyInfo: JourneyInfo;
+    promoCode: string;
+  }
+
+  interface QsParam {
+    key: string;
+    value: string;
+  }
+
+  interface BrowserInfo {
+    colorDepth: number;
+    timeZoneOffset: number;
+    screenHeight: number;
+    screenWidth: number;
+  }
+
+  interface RequestBody {
+    token: any;
+    ipAddress: string;
+    currencyCode: string;
+    searchCriteria: SearchCriteria;
+    qsParams: QsParam[];
+    languageCode: string;
+    paxInfoId: number;
+    reservationType: number;
+    userAgent: string;
+    sid: string;
+    browserInfo: BrowserInfo;
+  }
+
+  const handleSubmit = async () => {
+    const requestBody = {
+      clientID: "zjg!7Vu#6t@4Eb!9y@9m",
+      appKey: "c#ch*uf1DX!Zz4Gc#T@u4hT!A",
+    };
+
+    try {
+      const response = await axios.post(
+        "",
+        requestBody,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      setResponse(response.data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const handleSearch = async () => {
+    const requestBody: RequestBody = {
+      token: null,
+      ipAddress: "103.248.173.61",
+      currencyCode: "EUR",
+      searchCriteria: {
+        paxInfo: [
+          {
+            paxType: 1,
+            paxKey: "Adult1",
+          },
+        ],
+        journeyInfo: {
+          journeyType: 2,
+          routeInfo: [
+            { depCity: "EVN", arrCity: "BRU", travelDate: "2024-07-15" },
+
+            { depCity: "BRU", arrCity: "EVN", travelDate: "2024-08-29" },
+          ],
+        },
+        promoCode: "",
+      },
+      qsParams: [
+        {
+          key: "clickId",
+          value: "your-value",
+        },
+      ],
+      languageCode: "en-GB",
+      paxInfoId: 0,
+      reservationType: 0,
+      userAgent:
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+      sid: "d1cbe9ffd2a22694545917e242fca686ae3e23696775287731c8757337b203a4",
+      browserInfo: {
+        colorDepth: 24,
+        timeZoneOffset: -330,
+        screenHeight: 824,
+        screenWidth: 1536,
+      },
+    };
+    const token = response?.token;
+    try {
+      const res = await axios.post(
+        "",
+        requestBody,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer  ${token}`,
+          },
+        }
+      );
+
+      setsearch(res.data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  console.log(search);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    <>
+      <button onClick={handleSubmit}>Submit</button>
+      <br />
+      <button onClick={handleSearch}>Search</button>
+      {response && <div>Response: {JSON.stringify(response)}</div>}
+      <h1>vivek</h1>
+    </>
   );
 }
