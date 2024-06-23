@@ -1,10 +1,13 @@
-import SimpleApiCall from "@/components/simpleApiCall";
+"use client";
+import { Provider } from "react-redux";
+import store from "../../redux/store";
+import ApiCallWithReduxToolkit from "@/components/ApiCallWithReduxToolkit";
 
 export default function Home() {
   return (
-    <>
-      <h1>vivek</h1>
-      <SimpleApiCall />
-    </>
+    <Provider store={store}>
+      {/* <SimpleApiCall /> */}
+      <ApiCallWithReduxToolkit />
+    </Provider>
   );
 }
