@@ -30,7 +30,8 @@ const ApiCallWithReduxToolkit = () => {
       dispatch(searchFlights());
     }
   }, [dispatch, token]);
-
+  console.log(token)
+console.log(searchResult)
   return (
     <>
       <div>simpleApiCall</div>
