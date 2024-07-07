@@ -1,17 +1,18 @@
+// components/ScheduleComponent.tsx
 "use client";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../redux/store";
 import { fetchToken } from "../../redux/slices/authSlice";
 import { fetchScheduleFlights } from "../../redux/slices/scheduleSlice";
+import DirectionOneComponent from "./DirectionOneComponent";
+import DirectionTwoComponent from "./DirectionTwoComponent";
 
 const ScheduleComponent = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const {
-    token,
-    loading: authLoading,
-    error: authError,
-  } = useSelector((state: RootState) => state.auth);
+  const { token, loading: authLoading, error: authError } = useSelector(
+    (state: RootState) => state.auth
+  );
   const {
     scheduleResult,
     loading: scheduleLoading,
@@ -159,32 +160,8 @@ const ScheduleComponent = () => {
 
   return (
     <>
-      <h1 className="text-center">1 Time</h1>
-      <div className="flex text-center mb-5">
-        {transformedData?.map((time, index) => {
-          return time.direction === 1 ? (
-            <div key={index}>
-              <h1>{time.price}</h1>
-              <h1>
-                📅{time.year}-{time.month}-{time.day}
-              </h1>
-            </div>
-          ) : null;
-        })}
-      </div>
-      <h1 className="text-center">2 Time</h1>
-      <div className="flex text-center">
-        {transformedData?.map((time, index) => {
-          return time.direction === 2 ? (
-            <div key={index}>
-              <h1>{time.price}</h1>
-              <h1>
-                📅{time.year}-{time.month}-{time.day}
-              </h1>
-            </div>
-          ) : null;
-        })}
-      </div>
+      <DirectionOneComponent data={transformedData} />
+      <DirectionTwoComponent data={transformedData} />
     </>
   );
 };
