@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
 import searchReducer from "./slices/searchSlice";
 import scheduleReducer from './slices/scheduleSlice';
+import selectFlightReducer from './slices/selectFlightSlice'
 
 
 const store = configureStore({
@@ -9,7 +10,7 @@ const store = configureStore({
     auth: authReducer,
     search: searchReducer,
     schedule: scheduleReducer,
-
+    selectFlight: selectFlightReducer,
   },
 });
 

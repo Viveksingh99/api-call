@@ -4,6 +4,7 @@ import store from "../../redux/store";
 import ApiCallWithReduxToolkit from "@/components/ApiCallWithReduxToolkit";
 // import InputField from "@/components/InputField";
 import ScheduleComponent from "@/components/ScheduleComponent";
+import SelectFlightComponent from "@/components/SelectFlightState";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       {/* <SimpleApiCall /> */}
       <ApiCallWithReduxToolkit />
       <ScheduleComponent/>
+      <SelectFlightComponent/>
     </Provider>
   );
 }

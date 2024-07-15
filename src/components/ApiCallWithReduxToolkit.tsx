@@ -69,7 +69,7 @@ const ApiCallWithReduxToolkit = () => {
       dispatch(searchFlights(searchParams));
     }
   }, [dispatch, token]);
-  console.log(searchResult, "searchResult");
+  
   return (
     <>
       <div className="flex flex-wrap">

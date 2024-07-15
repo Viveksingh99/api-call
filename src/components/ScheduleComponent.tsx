@@ -60,11 +60,8 @@ const ScheduleComponent = () => {
     price: string;
   }
 
-  useEffect(() => {
-    // Fetch token on component mount
-    dispatch(fetchToken());
-  }, [dispatch]);
 
+  
   useEffect(() => {
     // Trigger fetchScheduleFlights when token becomes available
     if (token) {
