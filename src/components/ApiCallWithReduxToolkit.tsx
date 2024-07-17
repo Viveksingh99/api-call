@@ -77,7 +77,7 @@ const ApiCallWithReduxToolkit = () => {
         {searchLoading && <div>Searching flights...</div>}
         {authError && <div>Error fetching token: {authError}</div>}
         {searchError && <div>Error searching flights: {searchError}</div>}
-        {searchResult?.availableFlights.map((item: any, index: any) => {
+        {searchResult?.availableFlights?.map((item: any, index: any) => {
           return <div key={index}>
             {item.itinerary.flightDirection}
             <br/>
